@@ -45,8 +45,6 @@ get("/") do
 end
 
 get("/search_one") do
-  session.store(:bad_string, false)
-  session.store(:bad_integer, false)
   erb(:search_one)
 end
 
