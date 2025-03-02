@@ -1,6 +1,11 @@
 require "sinatra"
 require "sinatra/reloader"
 
+bad_string = false
+bad_integer = false
+
+unified_id = 0
+
 get("/") do
   redirect("/search_one")
 end
@@ -9,7 +14,31 @@ get("/search_one") do
   erb(:search_one)
 end
 
-get("/search_details") do
+get("/search_two") do
+
+  if params.fetch("search_id") == "" # Do parameters initialize as blank?
+    formatted_string = params.fetch("search_name").gsub!(/[Ã¨Ã©ÃªÃ«Ä?Ä?Ä?Ä?Ä?]/u, 'e').gsub('.','').gsub(' ','-')
+    api_url = "https://pokeapi.co/api/v2/pokemon/#{formatted_string}"
+    @raw_respnose = HTTP.get(api_url)
+    @raw_string = @raw_response.to_s
+    @parsed_data = JSON.parse(@raw_string)
+    @id = @parsed_data.fetch("id").to_i
+    if @id == "" # I have to do this check somehow but I am not sure how to check for this
+      bad_string = true
+      redirect("/search_one")
+    else
+      unified_id = @id
+    end
+  end
+  if params.fetch("search_name") == "" # Again, I should check if this works to check that this parameter hasn't been initialized
+    @formatting_id = @search_id.to_i
+    if @formatting_id > 1025 | @formatting_id < 1
+      bad_integer = true
+      redirect("/search_one")
+    else
+      unified_id = @formatting_id
+    end
+  end
   erb(:search_two)
 end
 

@@ -8,12 +8,18 @@
   Ditto
   Pikachu
   <a href="/">Return to Homepage</a></p>
-<% end %>
+<% 
+end 
+bad_string = false
+%>
 
 <% if bad_integer == true %>
   <p>That’s not a valid number. Please use a whole number between 1 and 1,025
   <a href="/">Return to Homepage</a></p>
-<% end %>
+<% 
+end 
+bad_integer = false
+%>
 
 <form action="/search_two">
   <label for="name_form">Search by Name</label>
