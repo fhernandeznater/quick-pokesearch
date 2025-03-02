@@ -9,7 +9,20 @@ generation = 0
 
 display_name = ""
 
+official_name = ""
+bulba_name = ""
+serebii_net_name = ""
+
 serebii_web_address = ""
+
+def serebii_name_generator(working_name)
+  if generation == 1 | 2 | 3 | 4 | 5 | 6 | 7
+    serebii_name = unified_id.to_s # Figure out how to add leading zeroes to a string
+  elsif generation == 8 | 9
+    serebii_name = params.fetch("name")
+  end
+
+end
 
 def serebii_web_address_generator(serebii_name)
   if generation == 1
