@@ -6,7 +6,7 @@ enable :sessions
 
 def serebii_name_generator(working_name)
   if session.fetch(:generation) <= 7
-    sessions.store(:serebii_name, unified_id.to_s.rjust(3, "0"))
+    session.store(:serebii_name, session.fetch(:unified_id).to_s.rjust(3, "0"))
   elsif session.fetch(:generation) > 7
     sessions.store(:serebii_name, working_name)
   end
