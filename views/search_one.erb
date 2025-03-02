@@ -1,18 +1,16 @@
 <h1>Quick PokéSearch</h1>
 
 <% if session.fetch(:bad_string) == true %>
-  <p>That's not a valid name. Please check your spelling or use one of these popular examples:
-  Squirtle
-  Charmander
-  Bulbasaur
-  Ditto
-  Pikachu
-  <a href="/">Return to Homepage</a></p>
+  <p>That's not a valid name. Please check your spelling or use one of these popular examples:<br>
+  Squirtle<br>
+  Charmander<br>
+  Bulbasaur<br>
+  Ditto<br>
+  Pikachu<br>
 <% end %>
 
 <% if session.fetch(:bad_integer) == true %>
-  <p>That's not a valid number. Please use a whole number between 1 and 1,025
-  <a href="/">Return to Homepage</a></p>
+  <p>That's not a valid number. Please use a whole number between 1 and 1,025.
 <% end %>
 
 <form action="/search_two">
