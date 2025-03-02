@@ -8,16 +8,12 @@
   Ditto
   Pikachu
   <a href="/">Return to Homepage</a></p>
-
 <% end %>
-<% session.store(:bad_string, false) %>
-
 
 <% if session.fetch(:bad_integer) == true %>
   <p>That's not a valid number. Please use a whole number between 1 and 1,025
   <a href="/">Return to Homepage</a></p>
 <% end %>
-<% session.store(:bad_integer, false) %>
 
 <form action="/search_two">
   <label for="name_form">Search by Name</label>
@@ -30,3 +26,6 @@
   <input id="id_form" type="text" name="search_id" placeholder="1—1025">
   <button>Find your Pokémon</button>
 </form>
+
+<% session.store(:bad_string, false) %>
+<% session.store(:bad_integer, false) %>

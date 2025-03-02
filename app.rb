@@ -8,7 +8,7 @@ def serebii_name_generator(working_name)
   if session.fetch(:generation) <= 7
     session.store(:serebii_name, session.fetch(:unified_id).to_s.rjust(3, "0"))
   elsif session.fetch(:generation) > 7
-    sessions.store(:serebii_name, working_name)
+    session.store(:serebii_name, working_name)
   end
 end
 
@@ -59,15 +59,14 @@ get("/search_two") do
     formatted_string = search_name.gsub('é', 'e').gsub('. ','').gsub(' ','-').gsub(': ', '-')
     api_url = "https://pokeapi.co/api/v2/pokemon/#{formatted_string}"
     raw_response = HTTP.get(api_url)
-    parsed_data = JSON.parse(raw_response.to_s)
 
-    @id = parsed_data.fetch("id").to_i
-
-    if @id.to_s.empty?
+    if raw_response.status.code == 404
       session.store(:bad_string, true)
       redirect("/search_one")
     else
-      session.store(:unified_id, @id)
+      parsed_data = JSON.parse(raw_response.to_s)
+      id = parsed_data.fetch("id").to_i
+      session.store(:unified_id, id)
       working_name = parsed_data.fetch("name")
       session.store(:display_name, working_name.capitalize)
       session.store(:working_name, working_name)
@@ -81,14 +80,13 @@ get("/search_two") do
       redirect("/search_one")
     else
       session.store(:unified_id, formatting_id)
+      api_url = "https://pokeapi.co/api/v2/pokemon/#{session.fetch(:unified_id)}"
+      raw_response = HTTP.get(api_url)
+      parsed_data = JSON.parse(raw_response.to_s)
+      working_name = parsed_data.fetch("name")
+      session.store(:display_name, working_name.capitalize)
+      session.store(:working_name, working_name)
     end
-    api_url = "https://pokeapi.co/api/v2/pokemon/#{session.fetch(:unified_id)}"
-    raw_response = HTTP.get(api_url)
-    parsed_data = JSON.parse(raw_response.to_s)
-
-    working_name = parsed_data.fetch("name")
-    session.store(:display_name, working_name.capitalize)
-    session.store(:working_name, working_name)
   elsif search_name.empty? && search_id.empty?
     redirect("/search_one")
   end
