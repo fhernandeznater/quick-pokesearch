@@ -1,5 +1,20 @@
 <h1>Quick PokéSearch</h1>
 
+<% if bad_string == true %>
+  <p>That's not a valid name. Please check your spelling or use one of these popular examples:
+  Squirtle
+  Charmander
+  Bulbasaur
+  Ditto
+  Pikachu
+  <a href="/">Return to Homepage</a></p>
+<% end %>
+
+<% if bad_integer == true %>
+  <p>That’s not a valid number. Please use a whole number between 1 and 1,025
+  <a href="/">Return to Homepage</a></p>
+<% end %>
+
 <form action="/search_two">
   <label for="name_form">Search by Name</label>
   <input id="name_form" type="text" name="search_name" placeholder="Enter a Pokémon Name">
