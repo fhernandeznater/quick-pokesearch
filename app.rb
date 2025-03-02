@@ -1,8 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 
-bad_string = false
-bad_integer = false
+enable :sessions
 
 unified_id = 0
 generation = 0
@@ -28,58 +27,26 @@ end
 
 def serebii_web_address_generator(serebii_name)
   if generation == 1
-    
-    serebii_web_address = “https://www.serebii.net/pokedex/#{serebii_name}.shtml”
-  
+    serebii_web_address = "https://www.serebii.net/pokedex/#{serebii_name}.shtml"
+  elsif generation == 2
+    serebii_web_address = "https://www.serebii.net/pokedex-gs/#{serebii_name}.shtml"
+  elsif generation == 3
+    serebii_web_address = "https://www.serebii.net/pokedex-rs/#{serebii_name}.shtml"
+  elsif generation == 4
+    serebii_web_address = "https://www.serebii.net/pokedex-dp/#{serebii_name}.shtml"
+  elsif generation == 5
+    serebii_web_address = "https://www.serebii.net/pokedex-bw/#{serebii_name}.shtml"
+  elsif generation == 6
+    serebii_web_address = "https://www.serebii.net/pokedex-xy/#{serebii_name}.shtml"
+  elsif generation == 7
+    serebii_web_address = "https://www.serebii.net/pokedex-sm/#{serebii_name}.shtml"
+  elsif generation == 8
+    serebii_web_address = "https://www.serebii.net/pokedex-swsh/#{serebii_name}"
+  elsif generation == 9
+    serebii_web_address = "https://www.serebii.net/pokedex-sv/#{serebii_name}"
   end
 
-  if generation == 2
-
-    serebii_web_address = “https://www.serebii.net/pokedex-gs/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 3
-
-    serebii_web_address = “https://www.serebii.net/pokedex-rs/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 4
-
-    serebii_web_address = “https://www.serebii.net/pokedex-dp/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 5
-
-    serebii_web_address = “https://www.serebii.net/pokedex-bw/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 6
-
-    serebii_web_address = “https://www.serebii.net/pokedex-xy/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 7
-
-    serebii_web_address = “https://www.serebii.net/pokedex-sm/#{serebii_name}.shtml”
-
-  end
-
-  if generation == 8
-
-    serebii_web_address = “https://www.serebii.net/pokedex-swsh/{serebii_name}”
-
-  end
-
-  if generation == 9
-
-    serebii_web_address = “https://www.serebii.net/pokedex-sv/#{serebii_name}“
-
-  end
+  return serebii_web_address
 end
 
 get("/") do
@@ -87,6 +54,8 @@ get("/") do
 end
 
 get("/search_one") do
+  session.store(:bad_string, false)
+  session.store(:bad_integer, false)
   erb(:search_one)
 end
 
@@ -100,7 +69,7 @@ get("/search_two") do
     @parsed_data = JSON.parse(@raw_string)
     @id = @parsed_data.fetch("id").to_i
     if @id == "" # I have to do this check somehow but I am not sure how to check for this
-      bad_string = true
+      session.store(:bad_string, true)
       redirect("/search_one")
     else
       unified_id = @id
@@ -109,7 +78,7 @@ get("/search_two") do
   if params.fetch("search_name") == "" # Again, I should check if this works to check that this parameter hasn't been initialized
     @formatting_id = @search_id.to_i
     if @formatting_id > 1025 | @formatting_id < 1
-      bad_integer = true
+      session.store(:bad_integer, true)
       redirect("/search_one")
     else
       unified_id = @formatting_id
