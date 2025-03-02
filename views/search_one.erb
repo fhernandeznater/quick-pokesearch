@@ -13,7 +13,7 @@
 <% session.store(:bad_string, false) %>
 
 
-<% if session.fetch(:bad_string) == true %>
+<% if session.fetch(:bad_integer) == true %>
   <p>That's not a valid number. Please use a whole number between 1 and 1,025
   <a href="/">Return to Homepage</a></p>
 <% end %>

@@ -1,8 +1,8 @@
 <h1>Quick PokéSearch (Part 2)</h1>
 
-<p>You searched for <%= @display_name %>! Just one more piece of information, please:
+<p>You searched for <%= session.fetch(:display_name) %>! Just one more piece of information, please:
 
-<form action="/search_two">
+<form action="/results">
   <label for="gen_form">Search by National Dex Number</label>
   <select id="gen_form" name="gen_selection">
     <option value="1">Gen I</option>
@@ -15,4 +15,5 @@
     <option value="8">Gen VIII</option>
     <option value="9">Gen IX</option>
   </select>
+  <button>Select your Generation</button>
 </form>
