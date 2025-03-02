@@ -1,50 +1,39 @@
 require "sinatra"
 require "sinatra/reloader"
-
 require "http"
 
 enable :sessions
 
-# unified_id = 0
-# generation = 0
-
-# display_name = ""
-# working_name = ""
-
-# official_name = ""
-# bulba_name = ""
-# serebii_net_name = ""
-
-# official_web_address = ""
-# bulba_web_address = ""
-# serebii_web_address = ""
-
 def serebii_name_generator(working_name)
-  if generation <= 7
-    serebii_name = unified_id.to_s.rjust(3, "0") # Figure out how to add leading zeroes to a string
-  elsif generation > 7
-    serebii_name = params.fetch("name")
+  if session.fetch(:generation) <= 7
+    sessions.store(:serebii_name, unified_id.to_s.rjust(3, "0"))
+  elsif session.fetch(:generation) > 7
+    sessions.store(:serebii_name, working_name)
   end
 end
 
 def serebii_web_address_generator(serebii_name)
-  if generation == 1
+  generation - session.fetch(:generation)
+  serebii_web_address = ""
+
+  case generation
+  when 1
     serebii_web_address = "https://www.serebii.net/pokedex/#{serebii_name}.shtml"
-  elsif generation == 2
+  when 2
     serebii_web_address = "https://www.serebii.net/pokedex-gs/#{serebii_name}.shtml"
-  elsif generation == 3
+  when 3
     serebii_web_address = "https://www.serebii.net/pokedex-rs/#{serebii_name}.shtml"
-  elsif generation == 4
+  when 4
     serebii_web_address = "https://www.serebii.net/pokedex-dp/#{serebii_name}.shtml"
-  elsif generation == 5
+  when 5
     serebii_web_address = "https://www.serebii.net/pokedex-bw/#{serebii_name}.shtml"
-  elsif generation == 6
+  when 6
     serebii_web_address = "https://www.serebii.net/pokedex-xy/#{serebii_name}.shtml"
-  elsif generation == 7
+  when 7
     serebii_web_address = "https://www.serebii.net/pokedex-sm/#{serebii_name}.shtml"
-  elsif generation == 8
+  when 8
     serebii_web_address = "https://www.serebii.net/pokedex-swsh/#{serebii_name}"
-  elsif generation == 9
+  when 9
     serebii_web_address = "https://www.serebii.net/pokedex-sv/#{serebii_name}"
   end
 
@@ -81,16 +70,17 @@ get("/search_two") do
       session.store(:unified_id, @id)
       working_name = parsed_data.fetch("name")
       session.store(:display_name, working_name.capitalize)
+      session.store(:working_name, working_name)
     end
 
-  elsif not search_id.empty? 
+  elsif not search_id.empty?
     # Searching by ID
-    @formatting_id = @search_id.to_i
-    if @formatting_id > 1025 || @formatting_id < 1
+    formatting_id = @search_id.to_i
+    if formatting_id > 1025 || formatting_id < 1
       session.store(:bad_integer, true)
       redirect("/search_one")
     else
-      session.store(:unified_id, @formatting_id)
+      session.store(:unified_id, formatting_id)
     end
     api_url = "https://pokeapi.co/api/v2/pokemon/#{unified_id}"
     raw_response = HTTP.get(api_url)
@@ -111,25 +101,13 @@ get("/results") do
   official_name = session.fetch(:working_name)
 
   @official_web_address = "https://www.pokemon.com/us/pokedex/{official_name}"
-
   @bulba_web_address = "https://bulbapedia.bulbagarden.net/wiki/{bulba_name}_(Pokémon)"
 
+  session.store(:generation, params.fetch("gen_selection").to_i)
 
+  serebii_formatted_name = serebii_name_generator(session.fetch(:working_name))
+
+  @serebii_web_address = serebii_web_address_generator(serebii_formatted_name)
 
   erb(:search_results)
-
-
-  unified_id = 0
-  generation = 0
-
-  display_name = ""
-  working_name = ""
-
-  official_name = ""
-  bulba_name = ""
-  serebii_net_name = ""
-
-  official_web_address = ""
-  bulba_web_address = ""
-  serebii_web_address = ""
 end
