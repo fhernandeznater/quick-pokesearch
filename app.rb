@@ -7,3 +7,11 @@ get("/") do
   <p>Define some routes in app.rb</p>
   "
 end
+
+get("/search_details") do
+
+end
+
+get("/results") do
+  
+end
