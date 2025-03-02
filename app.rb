@@ -8,11 +8,14 @@ unified_id = 0
 generation = 0
 
 display_name = ""
+working_name = ""
 
 official_name = ""
 bulba_name = ""
 serebii_net_name = ""
 
+official_web_address = ""
+bulba_web_address = ""
 serebii_web_address = ""
 
 def serebii_name_generator(working_name)
@@ -21,7 +24,6 @@ def serebii_name_generator(working_name)
   elsif generation == 8 | 9
     serebii_name = params.fetch("name")
   end
-
 end
 
 def serebii_web_address_generator(serebii_name)
@@ -102,12 +104,26 @@ get("/search_two") do
     @raw_respnose = HTTP.get(api_url)
     @raw_string = @raw_response.to_s
     @parsed_data = JSON.parse(@raw_string)
-    display_name = @parsed_data.fetch("name").capitalize
+
+    working_name = @parsed_data.fetch("name")
+    display_name = working_name.capitalize
   end
   erb(:search_two)
 end
 
 get("/results") do
-  
   erb(:search_results)
+  unified_id = 0
+  generation = 0
+
+  display_name = ""
+  working_name = ""
+
+  official_name = ""
+  bulba_name = ""
+  serebii_net_name = ""
+
+  official_web_address = ""
+  bulba_web_address = ""
+  serebii_web_address = ""
 end
