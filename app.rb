@@ -29,42 +29,56 @@ end
 def serebii_web_address_generator(serebii_name)
   if generation == 1
     
-    serebii_web_address = “https://www.serebii.net/pokedex/{serebii_name}.shtml”
+    serebii_web_address = “https://www.serebii.net/pokedex/#{serebii_name}.shtml”
+  
+  end
 
-  elsif generation == 2
+  if generation == 2
 
-    serebii_web_address = “https://www.serebii.net/pokedex-gs/{serebii_name}.shtml”
+    serebii_web_address = “https://www.serebii.net/pokedex-gs/#{serebii_name}.shtml”
 
-  elsif generation == 3
+  end
 
-    serebii_web_address = “https://www.serebii.net/pokedex-rs/{serebii_name}.shtml”
+  if generation == 3
 
-  elsif generation == 4
+    serebii_web_address = “https://www.serebii.net/pokedex-rs/#{serebii_name}.shtml”
 
-    serebii_web_address = “https://www.serebii.net/pokedex-dp/{serebii_name}.shtml”
+  end
 
-  elsif generation == 5
+  if generation == 4
 
-    serebii_web_address = “https://www.serebii.net/pokedex-bw/{serebii_name}.shtml”
+    serebii_web_address = “https://www.serebii.net/pokedex-dp/#{serebii_name}.shtml”
 
-  elsif generation == 6
+  end
 
-    serebii_web_address = “https://www.serebii.net/pokedex-xy/{serebii_name}.shtml”
+  if generation == 5
 
-  elsif generation == 7
+    serebii_web_address = “https://www.serebii.net/pokedex-bw/#{serebii_name}.shtml”
 
-    serebii_web_address = “https://www.serebii.net/pokedex-sm/{serebii_name}.shtml”
+  end
 
-  elsif generation == 8
+  if generation == 6
+
+    serebii_web_address = “https://www.serebii.net/pokedex-xy/#{serebii_name}.shtml”
+
+  end
+
+  if generation == 7
+
+    serebii_web_address = “https://www.serebii.net/pokedex-sm/#{serebii_name}.shtml”
+
+  end
+
+  if generation == 8
 
     serebii_web_address = “https://www.serebii.net/pokedex-swsh/{serebii_name}”
 
-  elsif generation == 9
+  end
 
-    serebii_web_address = “https://www.serebii.net/pokedex-sv/{serebii_name}“
+  if generation == 9
 
-  else
-    pp "You made a big mistake with the generation checker! Go fix it!"
+    serebii_web_address = “https://www.serebii.net/pokedex-sv/#{serebii_name}“
+
   end
 end
 
@@ -112,7 +126,16 @@ get("/search_two") do
 end
 
 get("/results") do
+  bulba_name = working_name.capitalize
+  official_name = working_name
+
+  official_web_address = "https://www.pokemon.com/us/pokedex/{official_name}"
+
+  bulba_web_address = "https://bulbapedia.bulbagarden.net/wiki/{bulba_name}_(Pokémon)"
+
   erb(:search_results)
+
+
   unified_id = 0
   generation = 0
 
