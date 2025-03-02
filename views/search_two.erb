@@ -1,0 +1,18 @@
+<h1>Quick PokéSearch (Part 2)</h1>
+
+<p>You searched for <%= @display_name %>! Just one more piece of information, please:
+
+<form action="/search_two">
+  <label for="gen_form">Search by National Dex Number</label>
+  <select id="gen_form" name="gen_selection">
+    <option value="1">Gen I</option>
+    <option value="2">Gen II</option>
+    <option value="3">Gen III</option>
+    <option value="4">Gen IV</option>
+    <option value="5">Gen V</option>
+    <option value="6">Gen VI</option>
+    <option value="7">Gen VII</option>
+    <option value="8">Gen VIII</option>
+    <option value="9">Gen IX</option>
+  </select>
+</form>
