@@ -13,7 +13,7 @@ def serebii_name_generator(working_name)
 end
 
 def serebii_web_address_generator(serebii_name)
-  generation - session.fetch(:generation)
+  generation = session.fetch(:generation)
   serebii_web_address = ""
 
   case generation
@@ -75,14 +75,14 @@ get("/search_two") do
 
   elsif not search_id.empty?
     # Searching by ID
-    formatting_id = @search_id.to_i
+    formatting_id = search_id.to_i
     if formatting_id > 1025 || formatting_id < 1
       session.store(:bad_integer, true)
       redirect("/search_one")
     else
       session.store(:unified_id, formatting_id)
     end
-    api_url = "https://pokeapi.co/api/v2/pokemon/#{unified_id}"
+    api_url = "https://pokeapi.co/api/v2/pokemon/#{session.fetch(:unified_id)}"
     raw_response = HTTP.get(api_url)
     parsed_data = JSON.parse(raw_response.to_s)
 
@@ -100,8 +100,8 @@ get("/results") do
   bulba_name = session.fetch(:working_name).capitalize
   official_name = session.fetch(:working_name)
 
-  @official_web_address = "https://www.pokemon.com/us/pokedex/{official_name}"
-  @bulba_web_address = "https://bulbapedia.bulbagarden.net/wiki/{bulba_name}_(Pokémon)"
+  @official_web_address = "https://www.pokemon.com/us/pokedex/#{official_name}"
+  @bulba_web_address = "https://bulbapedia.bulbagarden.net/wiki/#{bulba_name}_(Pokémon)"
 
   session.store(:generation, params.fetch("gen_selection").to_i)
 
