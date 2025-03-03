@@ -8,7 +8,7 @@ def serebii_name_generator(working_name)
   if session.fetch(:generation) <= 7
     session.store(:serebii_name, session.fetch(:unified_id).to_s.rjust(3, "0"))
   elsif session.fetch(:generation) > 7
-    session.store(:serebii_name, working_name)
+    session.store(:serebii_name, working_name.gsub("-", ""))
   end
 end
 
@@ -40,7 +40,11 @@ def serebii_web_address_generator(serebii_name)
   return serebii_web_address
 end
 
+
+
 get("/") do
+  session.store(:bad_string, false)
+  session.store(:bad_integer, false)
   redirect("/search_one")
 end
 
@@ -66,8 +70,9 @@ get("/search_two") do
       id = parsed_data.fetch("id").to_i
       session.store(:unified_id, id)
       working_name = parsed_data.fetch("name")
-      session.store(:display_name, working_name.capitalize)
+      session.store(:display_name, search_name.capitalize)
       session.store(:working_name, working_name)
+      session.store(:sprite_url, parsed_data.fetch("sprites").fetch("front_default"))
     end
 
   elsif not search_id.empty?
@@ -84,6 +89,7 @@ get("/search_two") do
       working_name = parsed_data.fetch("name")
       session.store(:display_name, working_name.capitalize)
       session.store(:working_name, working_name)
+      session.store(:sprite_url, parsed_data.fetch("sprites").fetch("front_default"))
     end
   elsif search_name.empty? && search_id.empty?
     redirect("/search_one")

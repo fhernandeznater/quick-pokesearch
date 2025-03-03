@@ -2,7 +2,7 @@
 
 <p>Here's what <%= session.fetch(:display_name)%> looks like:</p>
 
-<!--Make sure the sprite goes here-->
+<img src="<%= session.fetch(:sprite_url)%>" alt="Pokémon Sprite for <%= session.fetch(:display_name)%>"> <br>
 
 Try looking at one of the websites linked below for more information:<br>
 
@@ -12,3 +12,7 @@ Try looking at one of the websites linked below for more information:<br>
 <a href=<%= @bulba_web_address %>>Bulbapedia</a><br>
 
 <a href=<%= @serebii_web_address %>>Serebii.net</a><br>
+
+<form action="/search_one">
+  <button>Go back to the Homepage</button>
+</form>
