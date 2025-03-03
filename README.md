@@ -1,3 +1,16 @@
+## A Quick Note
+
+If I were to continue this project further, there's some functionality mentioned in this Read Me that I'd like to add, namely:
+
+•	Shiny Sprite Checkbox
+•	Writing out more edge cases
+
+
+Additionally, it would be great to add the following if I continued this as a personal project:
+
+•	More extensive CSS Styling
+•	More links
+
 # Quick PokéSearch Specification
 This app is a helpful search companion for playing Pokémon games! Using Quick PokéSearch helps users quickly find the location of Pokémon in the game of their choosing.
 ## Pain Point
@@ -21,6 +34,6 @@ While the search is simple, it’s also customizable: forms, regional variants, 
 •	As a user, I want to customize my searches to tailor to a particular game or variant of a Pokémon.
 •	As a user, I want to access websites with more information in case I want to learn more about a particular Pokémon.
 ## Domain Model
- 
+ ![Domain Model](https://drive.google.com/file/d/1W-IaC11-P-SQ2DRrJ01hMOaB6YnrLkl4/view?usp=sharing)
 ## Early Sketches
- 
+ ![Early Sketches](https://drive.google.com/file/d/1hRl5M1QdHq6fwu6yy7jYW6pDRcalZ3J1/view?usp=sharing)
