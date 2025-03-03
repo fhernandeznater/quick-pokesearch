@@ -34,6 +34,6 @@ While the search is simple, it’s also customizable: forms, regional variants, 
 •	As a user, I want to customize my searches to tailor to a particular game or variant of a Pokémon.
 •	As a user, I want to access websites with more information in case I want to learn more about a particular Pokémon.
 ## Domain Model
- ![Domain Model](https://drive.google.com/file/d/1W-IaC11-P-SQ2DRrJ01hMOaB6YnrLkl4/view?usp=sharing)
+https://drive.google.com/file/d/1W-IaC11-P-SQ2DRrJ01hMOaB6YnrLkl4/view?usp=sharing
 ## Early Sketches
- ![Early Sketches](https://drive.google.com/file/d/1hRl5M1QdHq6fwu6yy7jYW6pDRcalZ3J1/view?usp=sharing)
+https://drive.google.com/file/d/1hRl5M1QdHq6fwu6yy7jYW6pDRcalZ3J1/view?usp=sharing
